@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Kiiro Trade Patch</name>
+  <author>Cancelation</author>
+  <packageId>Cancelation.KiiroTradePatch</packageId>
+  <supportedVersions>
+    <li>1.6</li>
+  </supportedVersions>
+  <description>
+    绮罗商人优化：
+    本mod使绮罗商队和定居点只会出售和收购绮罗衣物。
+    可兼容绮罗衣物扩展与绮罗派系扩展（以 Kiiro 开头的派系自动生效，若绮罗派系未按照此规范命名其Def，会导致该补丁无法识别）。
+    本mod只硬性要求在原版绮罗mod后加载，但是如果有mod为绮罗族添加了新的衣物或派系，请将本mod放于此类mod之后。
+    注：对于绮罗的派系扩展没有进行太多测试，若存在bug，请在创意工坊中报告。
+
+    Makes Kiiro settlements and caravans buy Kiiro apparel while excluding all non-Kiiro apparel.
+    Automatically compatible with Kiiro apparel extensions (new apparel under the Kiiro_Apparel category is bought automatically) and Kiiro faction extensions (factions whose defName starts with Kiiro are handled automatically).
+    This mod only requires to be loaded after Kiiro Race, but if you have any mods that add new Kiiro apparel or factions, please load this mod after them.
+    Note: The Kiiro faction extensions have not been comprehensively tested, please report any bugs in the workshop.
+  </description>
+  <modDependencies>
+    <li>
+      <packageId>Ancot.KiiroRace</packageId>
+      <displayName>Kiiro Race</displayName>
+      <steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2988200143</steamWorkshopUrl>
+    </li>
+  </modDependencies>
+  <loadAfter>
+    <li>Ancot.KiiroRace</li>
+    <li>Ancot.KiiroStoryEventsExpanded</li>
+    <li>Solaris.RatkinRaceMod</li>
+  </loadAfter>
+</ModMetaData>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--为绮罗商队的克隆，避免def冲突-->
+<LanguageData>
+  <Kiiro_Caravan_BulkGoods.label>批发贸易商</Kiiro_Caravan_BulkGoods.label>
+  <Kiiro_Caravan_Exotic.label>稀有品贸易商</Kiiro_Caravan_Exotic.label>
+</LanguageData>

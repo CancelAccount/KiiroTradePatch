@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  动态克隆交易定义翻译预置。
+  注入器会把「被鼠族 mod 注入收购 tag、且被绮罗系派系引用的共享商队」动态克隆为绮罗专属副本
+  （defName = Kiiro_ + 原定义 defName），此文件为这些副本预置 label 翻译，
+  译名与原版 Core / Royalty 保持一致。
+-->
+<LanguageData>
+
+  <!-- 原版: Caravan_Outlander_CombatSupplier (combat supplier) -->
+  <Kiiro_Caravan_Outlander_CombatSupplier.label>作战补给商</Kiiro_Caravan_Outlander_CombatSupplier.label>
+
+  <!-- 原版: Caravan_Outlander_PirateMerchant (slaver) -->
+  <Kiiro_Caravan_Outlander_PirateMerchant.label>奴隶贩子</Kiiro_Caravan_Outlander_PirateMerchant.label>
+
+  <!-- 原版: Orbital_BulkGoods (bulk goods trader) -->
+  <Kiiro_Orbital_BulkGoods.label>批发贸易商</Kiiro_Orbital_BulkGoods.label>
+
+  <!-- 原版: Orbital_CombatSupplier (combat supplier) -->
+  <Kiiro_Orbital_CombatSupplier.label>作战补给商</Kiiro_Orbital_CombatSupplier.label>
+
+  <!-- 原版: Orbital_Exotic (exotic goods trader) -->
+  <Kiiro_Orbital_Exotic.label>稀有品贸易商</Kiiro_Orbital_Exotic.label>
+
+  <!-- 原版: Orbital_PirateMerchant (slave ship) -->
+  <Kiiro_Orbital_PirateMerchant.label>奴隶商船</Kiiro_Orbital_PirateMerchant.label>
+
+  <!-- 原版: Empire_Caravan_TraderGeneral (imperial trader, Royalty) -->
+  <Kiiro_Empire_Caravan_TraderGeneral.label>帝国贸易商</Kiiro_Empire_Caravan_TraderGeneral.label>
+
+  <!-- 原版: Orbital_Empire (imperial trader, Royalty) -->
+  <Kiiro_Orbital_Empire.label>帝国贸易商</Kiiro_Orbital_Empire.label>
+
+</LanguageData>

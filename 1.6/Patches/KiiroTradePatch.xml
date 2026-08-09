@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+  <!--======================================================================================-->
+  <!-- 1. 把主派系 Kiiro_Faction 的定居点交易引用替换为绮罗专属交易定义。 -->
+  <!--======================================================================================-->
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/FactionDef[defName='Kiiro_Faction']/baseTraderKinds/li[text()='Base_Outlander_Standard']</xpath>
+    <value>
+      <li>Kiiro_Base_Standard</li>
+    </value>
+  </Operation>
+
+  <!--======================================================================================-->
+  <!-- 2. 把绮罗隐居乡的商队（批发商、稀有品商）交易引用替换为绮罗专属交易定义。 -->
+  <!--======================================================================================-->
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/FactionDef[defName='Kiiro_Faction']/caravanTraderKinds/li[text()='Caravan_Outlander_BulkGoods']</xpath>
+    <value>
+      <li>Kiiro_Caravan_BulkGoods</li>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>Defs/FactionDef[defName='Kiiro_Faction']/caravanTraderKinds/li[text()='Caravan_Outlander_Exotic']</xpath>
+    <value>
+      <li>Kiiro_Caravan_Exotic</li>
+    </value>
+  </Operation>
+
+  <!--======================================================================================-->
+  <!-- 3. 修复绮罗本体商队定义中的收购 tag 拼写错误（KiiroDailyClothing 缺少下划线， -->
+  <!--    无法匹配任何绮罗衣物，导致商队不收购绮罗衣物）。 -->
+  <!--======================================================================================-->
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/TraderKindDef[defName='Caravan_Kiiro_Clothing']/stockGenerators/li[@Class='StockGenerator_BuyTradeTag' and tag='KiiroDailyClothing']</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/TraderKindDef[defName='Caravan_Kiiro_HousekeepingGroup']/stockGenerators/li[@Class='StockGenerator_BuyTradeTag' and tag='KiiroDailyClothing']</xpath>
+  </Operation>
+
+  <!--======================================================================================-->
+  <!-- 4. 给绮罗本体的三个自定义商队（家政团、牧羊人、服装商）注入绮罗衣物收购器。 -->
+  <!--    收购器按 Kiiro_Apparel 类别匹配所有绮罗衣物（含衣物扩展），并过滤绮罗无法装备的衣物。 -->
+  <!--======================================================================================-->
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/TraderKindDef[defName='Caravan_Kiiro_Nomadism']/stockGenerators</xpath>
+    <value>
+      <li Class="KiiroTradePatch.StockGenerator_BuyKiiroApparel" />
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/TraderKindDef[defName='Caravan_Kiiro_Clothing']/stockGenerators</xpath>
+    <value>
+      <li Class="KiiroTradePatch.StockGenerator_BuyKiiroApparel" />
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/TraderKindDef[defName='Caravan_Kiiro_HousekeepingGroup']/stockGenerators</xpath>
+    <value>
+      <li Class="KiiroTradePatch.StockGenerator_BuyKiiroApparel" />
+    </value>
+  </Operation>
+
+</Patch>
