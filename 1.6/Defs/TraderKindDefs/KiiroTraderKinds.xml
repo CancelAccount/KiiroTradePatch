@@ -402,8 +402,9 @@
       <!-- none -->
 
       <!-- Apparel -->
-      <!-- 只出售绮罗可装备的绮罗衣物（Kiiro_Apparel 类别下），取代原版按 BasicClothing/Clothing 全局 tag 出售 -->
+      <!-- 只出售绮罗可装备的绮罗日常衣物（Kiiro_Apparel 类别下），取代原版按 BasicClothing/Clothing 全局 tag 出售 -->
       <li Class="KiiroTradePatch.StockGenerator_SellKiiroApparel">
+        <dailyOnly>true</dailyOnly>
         <countRange>8~10</countRange>
       </li>
 
@@ -455,8 +456,10 @@
       <li Class="StockGenerator_BuyTradeTag"><tag>MusicalInstrument</tag></li>
       <li Class="StockGenerator_BuyTradeTag"><tag>BasicClothing</tag></li>
       <li Class="StockGenerator_BuyTradeTag"><tag>Clothing</tag></li>
-      <!-- 收购绮罗可装备的绮罗衣物（Kiiro_Apparel 类别下，排除绮罗无法装备的衣物） -->
-      <li Class="KiiroTradePatch.StockGenerator_BuyKiiroApparel" />
+      <!-- 收购绮罗可装备的绮罗日常衣物（Kiiro_Apparel 类别下，排除绮罗无法装备的衣物与护甲/作战服装等非日常类） -->
+      <li Class="KiiroTradePatch.StockGenerator_BuyKiiroApparel">
+        <dailyOnly>true</dailyOnly>
+      </li>
 
     </stockGenerators>
   </TraderKindDef>
@@ -636,8 +639,10 @@
       <li Class="StockGenerator_BuySingleDef" MayRequire="Ludeon.RimWorld.Anomaly"><thingDef>Shard</thingDef></li>
       <li Class="StockGenerator_BuySingleDef" MayRequire="Ludeon.RimWorld.Anomaly"><thingDef>Bioferrite</thingDef></li>
       <li Class="StockGenerator_BuySingleDef" MayRequire="Ludeon.RimWorld.Anomaly"><thingDef>RevenantSpine</thingDef></li>
-      <!-- 收购绮罗可装备的绮罗衣物（Kiiro_Apparel 类别下，排除绮罗无法装备的衣物） -->
-      <li Class="KiiroTradePatch.StockGenerator_BuyKiiroApparel" />
+      <!-- 收购绮罗可装备的绮罗衣物（Kiiro_Apparel 类别下，排除绮罗无法装备的衣物；稀有品商不收购绮罗日常衣物） -->
+      <li Class="KiiroTradePatch.StockGenerator_BuyKiiroApparel">
+        <excludeDailyApparel>true</excludeDailyApparel>
+      </li>
 
     </stockGenerators>
   </TraderKindDef>

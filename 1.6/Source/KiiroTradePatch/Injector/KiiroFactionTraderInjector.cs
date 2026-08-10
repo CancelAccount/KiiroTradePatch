@@ -80,15 +80,27 @@ namespace KiiroTradePatch
                         || IsGlobalClothingSellGenerator(sg) || IsGlobalWeaponSellGenerator(sg));
                     if (!trader.stockGenerators.Any(sg => sg is StockGenerator_BuyKiiroApparel))
                     {
-                        trader.stockGenerators.Add(new StockGenerator_BuyKiiroApparel());
+                        // 陆上海盗商（奴隶贩子）原版不收购任何衣物，不注入绮罗衣物收购器，保持原版意向。
+                        if (trader.defName != "Kiiro_Caravan_Outlander_PirateMerchant")
+                        {
+                            trader.stockGenerators.Add(CreateBuyGeneratorFor(trader));
+                        }
                     }
                     if (!trader.stockGenerators.Any(sg => sg is StockGenerator_SellKiiroApparel))
                     {
-                        trader.stockGenerators.Add(new StockGenerator_SellKiiroApparel());
+                        // 陆上海盗商（奴隶贩子）原版不收购也不出售衣物，不注入绮罗衣物出售器，保持原版意向。
+                        if (trader.defName != "Kiiro_Caravan_Outlander_PirateMerchant")
+                        {
+                            trader.stockGenerators.Add(CreateSellGeneratorFor(trader));
+                        }
                     }
                     if (!trader.stockGenerators.Any(sg => sg is StockGenerator_SellKiiroWeapon))
                     {
-                        trader.stockGenerators.Add(new StockGenerator_SellKiiroWeapon());
+                        // 原版不收购武器的商队（批发商/稀有品商，Weapons = none）不注入绮罗武器出售器，保持原版意向。
+                        if (!IsVanillaWeaponlessTrader(trader.defName))
+                        {
+                            trader.stockGenerators.Add(new StockGenerator_SellKiiroWeapon());
+                        }
                     }
                 }
             }
@@ -190,6 +202,76 @@ namespace KiiroTradePatch
             DefDatabase<TraderKindDef>.Add(clone);
             cloneCache[original.defName] = clone;
             return clone;
+        }
+
+        /// <summary>
+        /// 按商队原版衣物收购意向创建绮罗衣物收购器并配置收购范围：
+        /// - 原版只收购护甲（Armor/HiTechArmor）的商队（作战补给商、轨道海盗商）→ 只收购绮罗非日常衣物；
+        /// - 原版只收购日常衣物（BasicClothing/Clothing）的商队（轨道批发商、新石器定居点）→ 只收购绮罗日常衣物；
+        /// - 原版稀有品商不收购衣物（与陆上稀有品商 Kiiro_Caravan_Exotic 的 XML 配置一致）→ 只收购绮罗非日常衣物；
+        /// - 其余商队（定居点、帝国商队等，原版收购大部分衣物）→ 收购全部绮罗可装备衣物。
+        /// </summary>
+        private static StockGenerator_BuyKiiroApparel CreateBuyGeneratorFor(TraderKindDef trader)
+        {
+            StockGenerator_BuyKiiroApparel buyGenerator = new StockGenerator_BuyKiiroApparel();
+            switch (trader.defName)
+            {
+                case "Kiiro_Caravan_Outlander_CombatSupplier":
+                case "Kiiro_Orbital_CombatSupplier":
+                case "Kiiro_Orbital_PirateMerchant":
+                case "Kiiro_Caravan_Exotic":
+                case "Kiiro_Orbital_Exotic":
+                    buyGenerator.excludeDailyApparel = true;
+                    break;
+                case "Kiiro_Orbital_BulkGoods":
+                case "Kiiro_Base_Neolithic_Standard":
+                    buyGenerator.dailyOnly = true;
+                    break;
+                default:
+                    break;
+            }
+            return buyGenerator;
+        }
+
+        /// <summary>
+        /// 按商队原版衣物出售意向创建绮罗衣物出售器并配置出售范围（与收购器 CreateBuyGeneratorFor 一致）：
+        /// - 原版只出售护甲（Armor/HiTechArmor）的商队（作战补给商、轨道海盗商）→ 只出售绮罗非日常衣物；
+        /// - 原版只出售日常衣物（BasicClothing/Clothing）的商队（轨道批发商、新石器定居点）→ 只出售绮罗日常衣物；
+        /// - 原版稀有品商不出售衣物（与陆上稀有品商 Kiiro_Caravan_Exotic 的 XML 配置一致）→ 只出售绮罗非日常衣物；
+        /// - 其余商队（定居点、帝国商队等，原版出售大部分衣物）→ 出售全部绮罗可装备衣物。
+        /// </summary>
+        private static StockGenerator_SellKiiroApparel CreateSellGeneratorFor(TraderKindDef trader)
+        {
+            StockGenerator_SellKiiroApparel sellGenerator = new StockGenerator_SellKiiroApparel();
+            switch (trader.defName)
+            {
+                case "Kiiro_Caravan_Outlander_CombatSupplier":
+                case "Kiiro_Orbital_CombatSupplier":
+                case "Kiiro_Orbital_PirateMerchant":
+                case "Kiiro_Caravan_Exotic":
+                case "Kiiro_Orbital_Exotic":
+                    sellGenerator.excludeDailyApparel = true;
+                    break;
+                case "Kiiro_Orbital_BulkGoods":
+                case "Kiiro_Base_Neolithic_Standard":
+                    sellGenerator.dailyOnly = true;
+                    break;
+                default:
+                    break;
+            }
+            return sellGenerator;
+        }
+
+        /// <summary>
+        /// 原版 Weapons = none、不收购武器的商队（批发商/稀有品商，含陆上与轨道）。
+        /// 这些商队原版不出售也不收购武器，因此不注入绮罗武器出售器。
+        /// </summary>
+        private static bool IsVanillaWeaponlessTrader(string defName)
+        {
+            return defName == "Kiiro_Caravan_BulkGoods"
+                || defName == "Kiiro_Orbital_BulkGoods"
+                || defName == "Kiiro_Caravan_Exotic"
+                || defName == "Kiiro_Orbital_Exotic";
         }
 
         /// <summary>鼠族 mod 通过全局共享交易定义添加的收购 tag。</summary>

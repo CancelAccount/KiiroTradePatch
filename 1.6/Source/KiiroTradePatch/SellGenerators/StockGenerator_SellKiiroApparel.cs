@@ -9,9 +9,17 @@ namespace KiiroTradePatch
     /// 按 Kiiro_Apparel 类别出售绮罗可装备的绮罗衣物（与收购器 StockGenerator_BuyKiiroApparel 互补）。
     /// 取代原版按全局 tradeTag（BasicClothing/Clothing/Armor）出售的 StockGenerator_MarketValue，
     /// 使绮罗定居点/商队只出售绮罗衣物、不出现人类/鼠族等其他种族衣物。
+    /// 可通过 XML/注入器配置出售范围（dailyOnly / excludeDailyApparel），
+    /// 与收购器保持一致，避免出售器命中导致 WillTrade 绕过收购范围（玩家仍可卖出被排除的衣物）。
     /// </summary>
     public class StockGenerator_SellKiiroApparel : StockGenerator_MiscItems
     {
+        /// <summary>只出售绮罗日常衣物（排除护甲/太空服/作战服装等非日常类），由 XML 按商队配置。</summary>
+        public bool dailyOnly;
+
+        /// <summary>只出售绮罗非日常衣物（护甲/太空服/作战服装等），由 XML 按商队配置。</summary>
+        public bool excludeDailyApparel;
+
         /// <summary>
         /// 构造器：默认出售 8~12 件（XML 中可通过 countRange 覆盖）。
         /// </summary>
@@ -22,12 +30,12 @@ namespace KiiroTradePatch
 
         /// <summary>
         /// 匹配条件：属于 Kiiro_Apparel 类别（含扩展子类）、绮罗身体可装备、
-        /// 且允许随机生成的衣物（generateAllowChance > 0）。
+        /// 允许随机生成的衣物（generateAllowChance > 0），并按配置的出售范围过滤。
         /// 继承的 GenerateThings 会按该条件挑选衣物生成出售库存。
         /// </summary>
         public override bool HandlesThingDef(ThingDef thingDef)
         {
-            if (!thingDef.IsApparel)
+            if (thingDef == null || !thingDef.IsApparel)
             {
                 return false;
             }
@@ -38,9 +46,24 @@ namespace KiiroTradePatch
             {
                 return false;
             }
-            return thingDef.generateAllowChance > 0f
-                && KiiroApparelHelper.IsKiiroApparel(thingDef)
-                && KiiroApparelHelper.CanKiiroWear(thingDef);
+            if (thingDef.generateAllowChance <= 0f
+                || !KiiroApparelHelper.IsKiiroApparel(thingDef)
+                || !KiiroApparelHelper.CanKiiroWear(thingDef))
+            {
+                return false;
+            }
+            // 按商队原版出售意向配置出售范围（由 XML 或注入器设置，与收购器保持一致）：
+            if (dailyOnly)
+            {
+                // 只出售绮罗日常衣物（排除护甲/太空服/作战服装等非日常类）
+                return !KiiroApparelHelper.NotDailyApparel(thingDef);
+            }
+            if (excludeDailyApparel)
+            {
+                // 只出售绮罗非日常衣物（护甲/作战服装等）
+                return KiiroApparelHelper.NotDailyApparel(thingDef);
+            }
+            return true;
         }
 
         /// <summary>
