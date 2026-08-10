@@ -453,6 +453,8 @@
       <li Class="StockGenerator_BuyExpensiveSimple" />
       <li Class="StockGenerator_BuyTradeTag"><tag>Art</tag></li>
       <li Class="StockGenerator_BuyTradeTag"><tag>MusicalInstrument</tag></li>
+      <li Class="StockGenerator_BuyTradeTag"><tag>BasicClothing</tag></li>
+      <li Class="StockGenerator_BuyTradeTag"><tag>Clothing</tag></li>
       <!-- 收购绮罗可装备的绮罗衣物（Kiiro_Apparel 类别下，排除绮罗无法装备的衣物） -->
       <li Class="KiiroTradePatch.StockGenerator_BuyKiiroApparel" />
 
@@ -623,6 +625,17 @@
       <!-- Buying -->
       <li Class="StockGenerator_BuyExpensiveSimple" />
       <li Class="StockGenerator_BuyTradeTag"><tag>Art</tag></li>
+      <li Class="StockGenerator_BuyTradeTag"><tag>ImplantEmpireCommon</tag></li>
+      <li Class="StockGenerator_BuyTradeTag"><tag>ImplantEmpireRoyal</tag></li>
+      <li Class="StockGenerator_BuyTradeTag"><tag>PsylinkNeuroformer</tag></li>
+      <li Class="StockGenerator_BuyTradeTag"><tag>ExoticBuilding</tag></li>
+      <li Class="StockGenerator_BuyTradeTag"><tag>MusicalInstrument</tag></li>
+      <li Class="StockGenerator_BuyTradeTag"><tag>UtilitySpecial</tag></li>
+      <li Class="StockGenerator_BuySingleDef" MayRequire="Ludeon.RimWorld.Anomaly"><thingDef>Shell_Deadlife</thingDef></li>
+      <li Class="StockGenerator_BuySingleDef" MayRequire="Ludeon.RimWorld.Anomaly"><thingDef>VoidSculpture</thingDef></li>
+      <li Class="StockGenerator_BuySingleDef" MayRequire="Ludeon.RimWorld.Anomaly"><thingDef>Shard</thingDef></li>
+      <li Class="StockGenerator_BuySingleDef" MayRequire="Ludeon.RimWorld.Anomaly"><thingDef>Bioferrite</thingDef></li>
+      <li Class="StockGenerator_BuySingleDef" MayRequire="Ludeon.RimWorld.Anomaly"><thingDef>RevenantSpine</thingDef></li>
       <!-- 收购绮罗可装备的绮罗衣物（Kiiro_Apparel 类别下，排除绮罗无法装备的衣物） -->
       <li Class="KiiroTradePatch.StockGenerator_BuyKiiroApparel" />
 
